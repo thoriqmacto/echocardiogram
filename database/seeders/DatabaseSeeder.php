@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\MeasureTwoDimensional;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,11 +14,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Thariq',
+            'email' => 'thoriqgrady@yahoo.com',
+            'password' => bcrypt('asw'),
         ]);
+
+        $this->call(HospitalSeeder::class);
+        $this->call(CardiologistSeeder::class);
+        $this->call(PatientSeeder::class);
+        $this->call(FindingSeeder::class);
+        $this->call(DiagnosticSeeder::class);
+        $this->call(MeasureTwoDimensionalSeeder::class);
+        $this->call(MeasureDopplerSeeder::class);
+        $this->call(EchogramSeeder::class);
     }
 }
