@@ -20,21 +20,21 @@
         </h2>
     </x-slot>
 
-        <div class="max-w-7xl m-auto">
-            <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 table table-bordered" id="users-table">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">ID</th>
-                        <th scope="col" class="px-6 py-3">Name</th>
-                        <th scope="col" class="px-6 py-3">Email</th>
-                        <th scope="col" class="px-6 py-3">Created At</th>
-                        <th scope="col" class="px-6 py-3">Action</th>
-                    </tr>
-                    </thead>
-                </table>
-            </div>
+    <div class="max-w-7xl mx-auto py-4 md:max-w-5xl">
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 table table-bordered" id="users-table">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">ID</th>
+                    <th scope="col" class="px-6 py-3">Name</th>
+                    <th scope="col" class="px-6 py-3">Email</th>
+                    <th scope="col" class="px-6 py-3">Created At</th>
+                    <th scope="col" class="px-6 py-3">Action</th>
+                </tr>
+                </thead>
+            </table>
         </div>
+    </div>
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -46,10 +46,42 @@
                     { data: 'id', name: 'id' },
                     { data: 'name', name: 'name' },
                     { data: 'email', name: 'email' },
-                    { data: 'created_at', name: 'created_at' },
+                    {
+                        data: 'created_at',
+                        name: 'created_at',
+                        render: function(data, type, row) {
+                            return formatDate(data);
+                        }
+                    },
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ]
             });
         });
+
+        function formatDate(dateString) {
+            // Parse the input date string to a JavaScript Date object
+            var date = new Date(dateString);
+
+            // Extract the date and time components
+            var month = date.getMonth() + 1; // Months are zero-based in JavaScript
+            var day = date.getDate();
+            var year = date.getFullYear();
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var seconds = date.getSeconds();
+
+            // Pad single digit minutes and seconds with a leading zero
+            if (minutes < 10) {
+                minutes = '0' + minutes;
+            }
+            if (seconds < 10) {
+                seconds = '0' + seconds;
+            }
+
+            // Format the date and time
+            var formattedDate = month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds;
+
+            return formattedDate;
+        }
     </script>
 </x-app-layout>
